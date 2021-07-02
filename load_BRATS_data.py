@@ -26,6 +26,7 @@ def load_BRATS_data(volumes, slices, img_width, img_height, img_depth, path, tra
 
         while len(test_IDs) < test_cut:
             test_IDs.add(random.randint(1, volumes))
+            test_IDs = test_IDs - LGG
 
         train_IDs = volume_IDs - test_IDs
 
