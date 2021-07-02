@@ -19,7 +19,9 @@ def load_BRATS_data(volumes, slices, img_height, img_width, img_depth, path, tra
         train_cut = round(volumes * 0.9)
         test_cut = round(volumes * 0.1)
 
-        volume_IDs = set(range(1, volumes + 1))
+        volume_IDs_all = set(range(1, volumes + 1))
+        LGG = set(range(260, 335 + 1)) # Removes low-grade glioma patients
+        volume_IDs = volume_IDs_all - LGG
         test_IDs = set()
 
         while len(test_IDs) < test_cut:
