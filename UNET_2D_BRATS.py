@@ -16,12 +16,12 @@ IMG_DEPTH = 1
 
 # Imports the BRATS data to numpy arrays
 X_train, Y_train, X_test, Y_test, train_IDs, test_IDs = load_BRATS_data(
-    volumes = 369,
+    volumes = 293,
     slices = 155,
     img_height = IMG_HEIGHT,
     img_width = IMG_WIDTH,
     img_depth = IMG_DEPTH,
-    path = 'C:/Users/BJCurl/PycharmProjects/BRATS_2020_data')
+    path = 'C:/Users/Brandon/OneDrive/Documents/College Things/MD Anderson/Chung Lab/BRATS-2020-Data')
 
 
 def get_model(width = IMG_WIDTH, height = IMG_HEIGHT, depth = IMG_DEPTH):
@@ -94,12 +94,12 @@ model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = 'accur
 
 callbacks = [
     callbacks.EarlyStopping(patience = 3, monitor = 'val_loss'),
-    callbacks.TensorBoard(log_dir = 'logs'),
-    callbacks.ModelCheckpoint('UNET_2D_BRATS_training_checkpoint', verbose = 1, save_best_only = True)
+    callbacks.TensorBoard(log_dir = 'C:/Users/Brandon/OneDrive/Documents/GitHub/UNET_2D_BRATS/logs'),
+    callbacks.ModelCheckpoint('C:/Users/Brandon/OneDrive/Documents/GitHub/UNET_2D_BRATS/UNET_2D_BRATS_training_checkpoint', verbose = 1, save_best_only = True)
 ]
 
 model.fit(X_train, Y_train, validation_split = 0.1, batch_size = 16, epochs = 25, callbacks = callbacks)
-model.save('UNET_2D_BRATS_trained_model')
+model.save('C:/Users/Brandon/OneDrive/Documents/GitHub/UNET_2D_BRATS/UNET_2D_BRATS_trained_model')
 
 # Evaluate the model on test data
 model.evaluate(X_test, Y_test)

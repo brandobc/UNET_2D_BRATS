@@ -53,8 +53,8 @@ def load_BRATS_data(volumes, slices, img_height, img_width, img_depth, path, tra
     X_train, Y_train = populate_data(X = X_train, Y = Y_train, IDs = train_IDs, slices = slices, path = path, img_height = img_height, img_width = img_width)
     X_test, Y_test = populate_data(X = X_test, Y = Y_test, IDs = test_IDs, slices = slices, path = path, img_height = img_height, img_width = img_width)
 
-    print("Training IDs:" + train_IDs)
-    print("Testing IDs:" + test_IDs)
+    print("Training IDs:", train_IDs)
+    print("Testing IDs:", test_IDs)
     return X_train, Y_train, X_test, Y_test, train_IDs, test_IDs
 
 
@@ -65,7 +65,7 @@ def populate_data(X, Y, IDs, slices, path, img_height, img_width):
 
     for id in IDs:
         for z in range(slices):
-            slice = h5py.File((path + '/') if (path[-1] != '/') else path + f'volume_{id}_slice_{z}.h5', 'r')
+            slice = h5py.File(((path + '/') if (path[-1] != '/') else path) + f'volume_{id}_slice_{z}.h5', 'r')
             image = slice['image']  # Array of 4 images corresponding to the key below
             mask = slice['mask']  # Array of 3 masks corresponding to the key below
 
