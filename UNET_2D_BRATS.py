@@ -16,7 +16,7 @@ IMG_DEPTH = 1
 
 # Imports the BRATS data to numpy arrays
 X_train, Y_train, X_test, Y_test, train_IDs, test_IDs = load_BRATS_data(
-    volumes = 293,
+    volumes = 369,
     slices = 155,
     img_width = IMG_WIDTH,
     img_height = IMG_HEIGHT,
