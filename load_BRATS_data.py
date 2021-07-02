@@ -32,10 +32,12 @@ def load_BRATS_data(volumes, slices, img_width, img_height, img_depth, path, tra
     elif train_IDs == None:
         train_cut = 0
         test_cut = len(test_IDs)
+        train_IDs = set()
 
     elif test_IDs == None:
         test_cut = 0
         train_cut = len(train_IDs)
+        test_IDs = set()
 
     else:
         train_cut = len(train_IDs)
