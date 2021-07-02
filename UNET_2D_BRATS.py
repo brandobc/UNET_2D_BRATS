@@ -10,18 +10,19 @@ from tensorflow.keras import layers, Model, callbacks
 import numpy as np
 from load_BRATS_data import *
 
-IMG_HEIGHT = 240
 IMG_WIDTH = 240
+IMG_HEIGHT = 240
 IMG_DEPTH = 1
 
 # Imports the BRATS data to numpy arrays
 X_train, Y_train, X_test, Y_test, train_IDs, test_IDs = load_BRATS_data(
     volumes = 293,
     slices = 155,
-    img_height = IMG_HEIGHT,
     img_width = IMG_WIDTH,
+    img_height = IMG_HEIGHT,
     img_depth = IMG_DEPTH,
-    path = 'C:/Users/Brandon/OneDrive/Documents/College Things/MD Anderson/Chung Lab/BRATS-2020-Data')
+    path = 'C:/Users/Brandon/OneDrive/Documents/College Things/MD Anderson/Chung Lab/BRATS-2020-Data'
+)
 
 
 def get_model(width = IMG_WIDTH, height = IMG_HEIGHT, depth = IMG_DEPTH):

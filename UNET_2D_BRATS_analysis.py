@@ -1,26 +1,39 @@
+# File: UNET_2D_BRATS_analysis.py
+# Author: Brandon Curl
+# Contact: brandoncurl@utexas.edu
+#
+# Date Last Modified: 2-Jun-2021 13:00
+# Description of Program: [INSERT]
+
 import tensorflow as tf
-from tensorflow.keras import layers, Model, models
+from tensorflow.keras import models
 import numpy as np
-import os
-from skimage.io import imread
-from skimage.transform import resize
-import matplotlib.pyplot as plt
-import random
-import h5py
 from load_BRATS_data import *
 from DSC import *
 
+TRAIN_IDs = set()
+TEST_IDs = set()
+
 # Imports the BRATS data to numpy arrays
-X_train, Y_train, X_test, Y_test = load_BRATS_data(VOLUMES = 2, SLICES = 155, IMG_WIDTH = 240, IMG_HEIGHT = 240, IMG_CHANNELS = 1)
+X_train, Y_train, X_test, Y_test = load_BRATS_data(
+    volumes = None,
+    slices = 155,
+    img_width = 240,
+    img_height = 240,
+    img_depth = 1,
+    path = 'C:\Users\BJCurl\PycharmProjects\BRATS_2020_data',
+    train_IDs = TRAIN_IDs,
+    test_IDs = TEST_IDs
+)[0:3]
 
 # Loads the trained model
-unet = models.load_model('BRATS_trained_model')
+model = models.load_model('C:\Users\BJCurl\PycharmProjects\UNET_2D_BRATS\UNET_2D_BRATS_trained_model')
 
 # Predict the test cases
-preds = unet.predict(X_test, verbose = 1)
+preds = model.predict(X_test, verbose = 1)
 
-max_DSC_avg = 0.5
-best_confidence = 100
+max_DSC_avg = 0
+best_confidence = 0
 
 
 for conf in np.arange(0.2, 1, 0.001):

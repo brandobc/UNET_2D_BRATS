@@ -11,7 +11,7 @@ from skimage.transform import resize
 import h5py
 
 
-def load_BRATS_data(volumes, slices, img_height, img_width, img_depth, path, train_IDs = None, test_IDs = None):
+def load_BRATS_data(volumes, slices, img_width, img_height, img_depth, path, train_IDs = None, test_IDs = None):
     """Creates and returns 4D numpy arrays that contain the 2020 BRATS T2 FLAIR Images and Hyperintensity Masks"""
 
     if train_IDs == None and test_IDs == None: # Randomly parses the data by patient between the training and testing sets
@@ -42,23 +42,23 @@ def load_BRATS_data(volumes, slices, img_height, img_width, img_depth, path, tra
         test_cut = len(test_IDs)
 
     # Creates blank arrays to hold the data
-    X_train = np.zeros((train_cut * slices, img_height, img_width, img_depth), dtype = np.float32)
-    Y_train = np.zeros((train_cut * slices, img_height, img_width, img_depth), dtype = np.bool)
+    X_train = np.zeros((train_cut * slices, img_width, img_height, img_depth), dtype = np.float32)
+    Y_train = np.zeros((train_cut * slices, img_width, img_height, img_depth), dtype = np.bool)
 
-    X_test = np.zeros((test_cut * slices, img_height, img_width, img_depth), dtype = np.float32)
-    Y_test = np.zeros((test_cut * slices, img_height, img_width, img_depth), dtype = np.bool)
+    X_test = np.zeros((test_cut * slices, img_width, img_height, img_depth), dtype = np.float32)
+    Y_test = np.zeros((test_cut * slices, img_width, img_height, img_depth), dtype = np.bool)
 
 
     # Populates the arrays
-    X_train, Y_train = populate_data(X = X_train, Y = Y_train, IDs = train_IDs, slices = slices, path = path, img_height = img_height, img_width = img_width)
-    X_test, Y_test = populate_data(X = X_test, Y = Y_test, IDs = test_IDs, slices = slices, path = path, img_height = img_height, img_width = img_width)
+    X_train, Y_train = populate_data(X = X_train, Y = Y_train, IDs = train_IDs, slices = slices, path = path, img_width = img_width, img_height = img_height)
+    X_test, Y_test = populate_data(X = X_test, Y = Y_test, IDs = test_IDs, slices = slices, path = path, img_width = img_width, img_height = img_height)
 
     print("Training IDs:", train_IDs)
     print("Testing IDs:", test_IDs)
     return X_train, Y_train, X_test, Y_test, train_IDs, test_IDs
 
 
-def populate_data(X, Y, IDs, slices, path, img_height, img_width):
+def populate_data(X, Y, IDs, slices, path, img_width, img_height):
     """Populates the data numpy arrays with the training and testing data"""
 
     i = 0
@@ -74,14 +74,14 @@ def populate_data(X, Y, IDs, slices, path, img_height, img_width):
             # 1 is T1?
             # 2 is T1Gd
             # 3 is T2
-            FLAIR = np.expand_dims(resize(FLAIR, (img_height, img_width), mode = 'constant', preserve_range = True), axis = -1)
+            FLAIR = np.expand_dims(resize(FLAIR, (img_width, img_height), mode = 'constant', preserve_range = True), axis = -1)
             X[i] = FLAIR
 
             T2_hyperintensity = np.maximum(np.maximum(mask[:, :, 0], mask[:, :, 1]), mask[:, :, 2])  # enhancing disease, necrotic interior tissue, and peritumoral edema
             # 0 is necrotic
             # 1 is peritumoral edema
             # 2 is enhancing
-            T2_hyperintensity = np.expand_dims(resize(T2_hyperintensity, (img_height, img_width), mode = 'constant', preserve_range = True), axis = -1)
+            T2_hyperintensity = np.expand_dims(resize(T2_hyperintensity, (img_width, img_height), mode = 'constant', preserve_range = True), axis = -1)
             Y[i] = T2_hyperintensity
 
             slice.close()
