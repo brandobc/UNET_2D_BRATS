@@ -3,3 +3,9 @@ Testing IDs: {4, 133, 6, 13, 22, 24, 29, 30, 35, 37, 41, 45, 49, 185, 59, 61, 18
 
 Epoch 00007: val_loss did not improve from 0.00000
 180/180 [==============================] - 10s 52ms/step - loss: 0.0054 - accuracy: 0.9981
+
+MDA Data Path: 'C:/Users/BJCurl/PycharmProjects/BRATS_2020_data'
+MDA Model Path: 'C:/Users/BJCurl/PycharmProjects/UNET_2D_BRATS/UNET_2D_BRATS_trained_model'
+
+Desktop Data Path:
+Desktop Model Path:

@@ -11,7 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from load_BRATS_data import *
 from DSC import *
-from multi_slice_viewer import *
+from multi_slice_overlain import *
 
 CONFIDENCE = 0.5764
 
@@ -25,13 +25,13 @@ X_train, Y_train, X_test, Y_test, tr, te = load_BRATS_data(
     img_width = 240,
     img_height = 240,
     img_depth = 1,
-    path = 'C:/Users/Brandon/OneDrive/Documents/College Things/MD Anderson/Chung Lab/BRATS-2020-Data',
+    path = 'C:/Users/BJCurl/PycharmProjects/BRATS_2020_data',
     #train_IDs = TRAIN_IDs,
     test_IDs = TEST_IDs
 )
 
 # Loads the trained model
-model = models.load_model('C:/Users/Brandon/OneDrive/Documents/GitHub/UNET_2D_BRATS/UNET_2D_BRATS_trained_model')
+model = models.load_model('C:/Users/BJCurl/PycharmProjects/UNET_2D_BRATS/UNET_2D_BRATS_trained_model')
 
 # Predict the test cases
 preds = model.predict(X_test, verbose = 1)
@@ -39,7 +39,7 @@ preds = model.predict(X_test, verbose = 1)
 mask = np.copy(preds)
 mask[mask < CONFIDENCE] = 0
 mask[mask >= CONFIDENCE] = 1
-multi_slice_viewer(X_test)
+multi_slice_overlain(X_test, mask, 0.5)
 
 
 def find_best_conf():
